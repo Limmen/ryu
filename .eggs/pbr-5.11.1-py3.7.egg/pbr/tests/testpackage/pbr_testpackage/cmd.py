@@ -1,5 +1,4 @@
-# Copyright (C) 2011, 2012 Nippon Telegraph and Telephone Corporation.
-# Copyright (C) 2011 Isaku Yamahata <yamahata at valinux co jp>
+# Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,12 +12,15 @@
 # implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from __future__ import print_function
 
-import setuptools
-# import ryu.hooks
-#
-#
-# ryu.hooks.save_orig()
-setuptools.setup(name='csle-ryu-fork',
-                 setup_requires=['pbr'],
-                 pbr=True)
+
+def main():
+    print("PBR Test Command")
+
+
+class Foo(object):
+
+    @classmethod
+    def bar(self):
+        print("PBR Test Command - with class!")

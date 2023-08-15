@@ -1,6 +1,3 @@
-# Copyright (C) 2011, 2012 Nippon Telegraph and Telephone Corporation.
-# Copyright (C) 2011 Isaku Yamahata <yamahata at valinux co jp>
-#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -14,11 +11,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import setuptools
-# import ryu.hooks
-#
-#
-# ryu.hooks.save_orig()
-setuptools.setup(name='csle-ryu-fork',
-                 setup_requires=['pbr'],
-                 pbr=True)
+import os
+
+import testscenarios
+
+
+def load_tests(loader, standard_tests, pattern):
+    # top level directory cached on loader instance
+    this_dir = os.path.dirname(__file__)
+    package_tests = loader.discover(start_dir=this_dir, pattern=pattern)
+    result = loader.suiteClass()
+    result.addTests(testscenarios.generate_scenarios(standard_tests))
+    result.addTests(testscenarios.generate_scenarios(package_tests))
+    return result

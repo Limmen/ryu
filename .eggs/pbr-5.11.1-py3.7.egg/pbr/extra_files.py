@@ -1,5 +1,4 @@
-# Copyright (C) 2011, 2012 Nippon Telegraph and Telephone Corporation.
-# Copyright (C) 2011 Isaku Yamahata <yamahata at valinux co jp>
+# Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,11 +13,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import setuptools
-# import ryu.hooks
-#
-#
-# ryu.hooks.save_orig()
-setuptools.setup(name='csle-ryu-fork',
-                 setup_requires=['pbr'],
-                 pbr=True)
+from distutils import errors
+import os
+
+_extra_files = []
+
+
+def get_extra_files():
+    global _extra_files
+    return _extra_files
+
+
+def set_extra_files(extra_files):
+    # Let's do a sanity check
+    for filename in extra_files:
+        if not os.path.exists(filename):
+            raise errors.DistutilsFileError(
+                '%s from the extra_files option in setup.cfg does not '
+                'exist' % filename)
+    global _extra_files
+    _extra_files[:] = extra_files[:]
